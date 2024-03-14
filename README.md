@@ -203,8 +203,10 @@ Docker Desktopを起動して、以下コマンドを実行する。
 ```bash
 # DB停止
 Docker Desktopから停止する
-# DBアクセス
-~/bin/sqlplus.sh
+# DBサーバーに接続
+docker exec -it docker-dbserver-1 bash
+# DBサーバーでsqlplusをsysdbaとして起動
+sqlplus / as sysdba
 ```
 
 # 課題
