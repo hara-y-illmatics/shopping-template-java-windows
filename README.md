@@ -139,6 +139,8 @@ cd c:\git\shopping\bin
 ```bash
 # DBサーバーに接続
 docker exec -it docker-dbserver-1 bash
+# .bashrcにNLS_LANGを設定(DBサーバー初回起動時のみ)
+(echo 'NLS_LANG="Japanese_Japan.AL32UTF8"'; echo 'export NLS_LANG') > .bashrc
 # DBサーバーでsqlplusをsysdbaとして起動
 sqlplus / as sysdba
 # pdb$seedをopenするため下記の設定が必要
@@ -200,13 +202,12 @@ Docker Desktopを起動して、以下コマンドを実行する。
 ## サービス起動/停止＋
 ```bash
 # DB停止
-Docker Desktopから停止する
+Docker Desktopから停止する、あるいは
+docker stop (docker psで確認したDBサーバーのCONTAINER ID)
 # DBサーバーに接続
 docker exec -it docker-dbserver-1 bash
-# DBサーバーでsqlplusをsysdbaとして起動
-sqlplus / as sysdba
-# 接続先DBをTESTに変更
-alter session set container=TEST;
+# DBサーバーに接続
+sqlplus tuser/tpassword@localhost:1521/test
 # CRUDの例:usersテーブルの検索
 SELECT id, name FROM users;
 ```
